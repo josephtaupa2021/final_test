@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<body>
+    <center>
+        <div>
+            <%- include('./partials/header') %>
+        </div>
+
+        <div>
+            <%- include('./partials/links') %>
+        </div>
+        <h4>Messages</h4>
+
+        <% for (let message of locals.messages) { %>
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <%= message.dataValues.content %>
+                        </td>
+                        <td><input type="button" value="Like" id="btn_like" onclick="upvote()"></td>
+                        <td id="upvote-count"></td>
+                        <td> <input type="button" value="Dislike" id="btn_dislike" onclick="downvote()">
+                        </td>
+                        <td id="downvote-count"></td>
+                    </tr>
+                </table>
+                <script>
+                    let counter = 0;
+                    function upvote() {
+                        counter++;
+                        document.getElementById('upvote-count').innerHTML = counter;
+                    }
+                    function downvote() {
+                        counter++;
+                        document.getElementById('downvote-count').innerHTML = counter;
+                    }
+                </script>
+            </div>
+            <% } %>
+    </center>
+
+</body>
+
+</html>
