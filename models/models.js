@@ -10,14 +10,15 @@ User.init({
     role: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-}, { sequelize })
+}, { freezeTableName: true, sequelize, modelName: 'User' })
 
 
 class Message extends Model { }
 Message.init({
     content: DataTypes.STRING,
+    creator: DataTypes.STRING,
     time: DataTypes.TIME,
-}, { sequelize })
+}, { sequelize, modelName: 'Message' })
 
 User.hasMany(Message)
 Message.belongsTo(User);

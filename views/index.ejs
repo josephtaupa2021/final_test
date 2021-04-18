@@ -21,34 +21,37 @@
         <h4>Messages</h4>
 
         <% for (let message of locals.messages) { %>
-            <div>
-                <table>
-                    <tr>
-                        <td>
+            <table class="message-table">
+                <tr>
+                    <td>
+                        <strong>
+                            <%= message.dataValues.creator %>
+                        </strong>
+                        <p>
+                            <%= message.dataValues.createdAt %>
+                        </p>
+                        <p>
                             <%= message.dataValues.content %>
-                        </td>
-                        <td><input type="button" value="Like" id="btn_like" onclick="upvote()"></td>
-                        <td id="upvote-count"></td>
-                        <td> <input type="button" value="Dislike" id="btn_dislike" onclick="downvote()">
-                        </td>
-                        <td id="downvote-count"></td>
-                    </tr>
-                </table>
+                        </p>
+                        <p><input type="button" value="Like" id="btn_like" onclick="upvote()">
+                            <input type="button" value="Dislike" id="btn_dislike" onclick="downvote()">
+                        </p>
+                    </td>
+                </tr>
                 <script>
                     let counter = 0;
                     function upvote() {
                         counter++;
-                        document.getElementById('upvote-count').innerHTML = counter;
+                        document.getElementById('btn_like').value = `Like ${counter}`;
                     }
                     function downvote() {
                         counter++;
-                        document.getElementById('downvote-count').innerHTML = counter;
+                        document.getElementById('btn_dislike').value = `Dislike ${counter}`;
                     }
                 </script>
-            </div>
+            </table>
             <% } %>
     </center>
-
 </body>
 
 </html>

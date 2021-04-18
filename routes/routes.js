@@ -3,18 +3,13 @@ const jwt = require('jsonwebtoken')
 const { Router } = require('express')
 const router = Router()
 
-
 router.get('/', async function (req, res) {
     let messages = await Message.findAll({ include: User })
     let data = { messages }
-
     res.render('index.ejs', data)
 })
 
-router.get('/createUser', async function (req, res) {
-    res.render('createUser.ejs')
-})
-
+router.get('/createUser', async function (req, res) { res.render('createUser.ejs') })
 router.post('/createUser', async function (req, res) {
     let { username, password } = req.body
 
@@ -30,18 +25,12 @@ router.post('/createUser', async function (req, res) {
     res.redirect('/login')
 })
 
-router.get('/login', function (req, res) {
-    res.render('login')
-})
-
+router.get('/login', function (req, res) { res.render('login') })
 router.post('/login', async function (req, res) {
     let { username, password } = req.body
 
-
     try {
-        let user = await User.findOne({
-            where: { username }
-        })
+        let user = await User.findOne({ where: { username } })
         if (user !== undefined && user.password === password) {
             let data = {
                 username: username,
@@ -75,16 +64,16 @@ router.post('/message', async function (req, res) {
 
     if (token) {
         let payload = await jwt.verify(token, "theSecret")
-
         let user = await User.findOne({
             where: { username: payload.username }
         })
 
         let msg = await Message.create({
             content,
+            creator: user.username,
             userId: user.id
         })
-
+        console.log(msg.toJSON())
         res.redirect('/')
     } else {
         res.redirect('/login')
